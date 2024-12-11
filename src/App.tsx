@@ -1,10 +1,10 @@
 import React from "react";
-import "./styles.scss";
+import Header from "./components/Header/Header.tsx";
 
 const App = () => {
   return (
     <div>
-      <h1>To-Do List Application</h1>
+      <Header />
     </div>
   );
 };
