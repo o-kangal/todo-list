@@ -1,13 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./components/Header/Header.tsx";
 import TaskList from "./components/TaskList/TaskList.tsx";
-import { useState } from "react";
+import TaskForm from "./components/TaskForm/TaskForm.tsx";
+
+interface Task {
+  id: number;
+  title: string;
+  completed: boolean;
+}
 
 const App = () => {
-  const [tasks, setTasks] = useState([
+  const [tasks, setTasks] = useState<Task[]>([
     { id: 1, title: "Learn React", completed: false },
     { id: 2, title: "Build a To-Do List App", completed: true },
   ]);
+
+  const addTask = (title: string) => {
+    const newTask: Task = {
+      id: Date.now(),
+      title,
+      completed: false,
+    };
+    setTasks((prevTasks) => [newTask, ...prevTasks]);
+  };
 
   const toggleTask = (id: number) => {
     setTasks((prevTasks) =>
@@ -23,7 +38,8 @@ const App = () => {
 
   return (
     <div>
-      <header />
+      <Header />
+      <TaskForm addTask={addTask} />
       <TaskList tasks={tasks} toggleTask={toggleTask} deleteTask={deleteTask} />
     </div>
   );
