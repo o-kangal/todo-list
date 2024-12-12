@@ -50,11 +50,25 @@ const App: React = () => {
     setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
   };
 
+  const editTask = (id: number, newTitle: string) => {
+    if (!newTitle.trim()) return;
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === id ? { ...task, title: newTitle } : task
+      )
+    );
+  };
+
   return (
     <div>
       <Header />
       <TaskForm addTask={addTask} />
-      <TaskList tasks={tasks} toggleTask={toggleTask} deleteTask={deleteTask} />
+      <TaskList
+        tasks={tasks}
+        toggleTask={toggleTask}
+        deleteTask={deleteTask}
+        editTask={editTask}
+      />
     </div>
   );
 };

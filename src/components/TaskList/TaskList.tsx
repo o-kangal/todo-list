@@ -12,9 +12,15 @@ interface TaskListProps {
   tasks: Task[];
   toggleTask: (id: number) => void;
   deleteTask: (id: number) => void;
+  editTask: (id: number, newTitle: string) => void;
 }
 
-const TaskList: React<TaskListProps> = ({ tasks, toggleTask, deleteTask }) => {
+const TaskList: React<TaskListProps> = ({
+  tasks,
+  toggleTask,
+  deleteTask,
+  editTask,
+}) => {
   return (
     <div className="task-list">
       {tasks.map((task) => (
@@ -25,6 +31,7 @@ const TaskList: React<TaskListProps> = ({ tasks, toggleTask, deleteTask }) => {
           completed={task.completed}
           toggleTask={toggleTask}
           deleteTask={deleteTask}
+          editTask={editTask}
         />
       ))}
     </div>
