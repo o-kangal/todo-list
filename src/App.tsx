@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./components/Header/Header.tsx";
 import TaskList from "./components/TaskList/TaskList.tsx";
 import TaskForm from "./components/TaskForm/TaskForm.tsx";
@@ -9,11 +9,25 @@ interface Task {
   completed: boolean;
 }
 
-const App = () => {
-  const [tasks, setTasks] = useState<Task[]>([
-    { id: 1, title: "Learn React", completed: false },
-    { id: 2, title: "Build a To-Do List App", completed: true },
-  ]);
+const App: React = () => {
+  // Load tasks from LocalStorage on app start
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    const storedTasks = localStorage.getItem("tasks");
+    return storedTasks ? JSON.parse(storedTasks) : [];
+  });
+
+  // // Load tasks from LocalStorage on app start
+  // useEffect(() => {
+  //   const storedTasks = localStorage.getItem("tasks");
+  //   if (storedTasks) {
+  //     setTasks(JSON.parse(storedTasks));
+  //   }
+  // }, []);
+
+  // Save tasks to LocalStorage whenever tasks state changes
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const addTask = (title: string) => {
     const newTask: Task = {
